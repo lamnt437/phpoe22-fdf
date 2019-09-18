@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
 
         /* seed bill */
         foreach($users as $user) {
-        	$bills = factory(\App\Bill, 3)->create();
+        	$bills = factory(\App\Bill::class, 3)->create();
         	foreach($users as $user) {
         		$user->bills()->saveMany($bills);
         	}
@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
 
         /* seed image */
         foreach($products as $product) {
-        	$images = factory(\App\Product::class, 3)->create();
+        	$images = factory(\App\Image::class, 3)->create();
         	$product->images()->saveMany($images);
         }
 
@@ -55,16 +55,19 @@ class DatabaseSeeder extends Seeder
                 $comments = factory(\App\Comment::class, 1)->create();
                 $comment = $comments[0];
                 $user->comments()->save($comment);
-                $product->comments()-save($comment);
+                $product->comments()->save($comment);
             }
         }
 
         /* seed bill_product */
         foreach($bills as $bill) {
             foreach($products as $product) {
-                $bill->product()->save($product, ['quantity' => rand(0, 10)], 'bill_product');
+                $bill->products()->save($product, ['quantity' => rand(0, 10)], 'bill_product');
             }
         }
+
+        /* seed category */
+        $categories = factory(\App\Category::class, 3)->create();
 
         /* seed product_category */
         foreach($products as $product) {
@@ -76,7 +79,7 @@ class DatabaseSeeder extends Seeder
         /* seed view_history */
         foreach($users as $user) {
             foreach($products as $product) {
-                $view_histories = factory(\App\ViewHistory::class, 1);
+                $view_histories = factory(\App\ViewHistory::class, 1)->create();
                 $view_history = $view_histories[0];
                 $user->view_history()->save($view_history);
                 $product->view_history()->save($view_history);

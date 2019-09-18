@@ -7,6 +7,6 @@ use Faker\Generator as Faker;
 
 $factory->define(Bill::class, function (Faker $faker) {
     return [
-        'status' => rand(0, 1) == 1?,
+        'status' => rand(0, 1) == 1,
     ];
 });
